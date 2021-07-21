@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Bug Tracker App</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <!-- Responsive meta tag -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+{% block content %}
+<ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link active" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/register/">Register</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/login/">Login</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/submit/">Submit-Ticket</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/user/{{ user.id }}/">User-View</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/logout/">Logout</a>
+    </li>
+  </ul>
+  <br>
+
+<h4>
+    {% if user.is_authenticated %}
+        <p>Welcome, username({{ user.get_username|default:'Guest' }}): {{user.displayname |default:':)'}} <b>{{ user.get_full_name}}</b>. Thanks for logging in.</p>
+    {% else %}
+        <p>Welcome, new user. Please log in.</p>
+    {% endif %}
+</h4>
+<br>
+
+
+<table class="table table-hover">
+    <tr>
+      <th scope="col">New Ticket</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+    <tr>
+        <th scope="col" style="width: 10%">ID</th>
+        <th scope="col">Ticket</th>
+        <th scope="col">Assign-To</th>
+        <th scope="col">Reported-By</th>
+        <th scope="col">Date</th>
+
+      </tr>
+  <tbody>
+    {% for foo in new %}
+    <tr data-href="/ticket/{{ foo.id }}/">
+            <td scope="row">{{ foo.id }}</td>
+      <td>{{ foo }}</td>
+      <td>{{ foo.ticket_assigned }}</td>
+      <td>{{ foo.ticket_submitted }}</td>
+      <td>{{ foo.date_filed }}</td>
+    {% endfor %}
+    </tr>
+  </tbody>
+
+
+    <tr>
+      <th scope="col">In Progress Tickets</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  <tbody>
+    {% for foo in inprogress %}
+    <tr data-href="/ticket/{{ foo.id }}/">
+            <td scope="row">{{ foo.id }}</td>
+      <td>{{ foo }}</td>
+      <td>{{ foo.ticket_assigned }}</td>
+      <td>{{ foo.ticket_submitted }}</td>
+      <td>{{ foo.date_filed }}</td>
+    {% endfor %}
+    </tr>
+  </tbody>
+
+
+    <tr>
+      <th scope="col">Done Tickets</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+
+  <tbody>
+    {% for foo in done %}
+    <tr data-href="/ticket/{{ foo.id }}/">
+            <td scope="row">{{ foo.id }}</td>
+      <td>{{ foo }}</td>
+      <td>{{ foo.ticket_assigned }}</td>
+      <td>{{ foo.ticket_submitted }}</td>
+      <td>{{ foo.date_filed }}</td>
+    {% endfor %}
+    </tr>
+
+
+  </tbody>
+    <tr>
+      <th scope="col">Invalid Tickets</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+
+  <tbody>
+    {% for foo in invalid %}
+    <tr data-href="/ticket/{{ foo.id }}/">
+            <td scope="row">{{ foo.id }}</td>
+      <td>{{ foo }}</td>
+      <td>{{ foo.ticket_assigned }}</td>
+      <td>{{ foo.ticket_submitted }}</td>
+      <td>{{ foo.date_filed }}</td>
+    {% endfor %}
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+        const rows = document.querySelectorAll("tr[data-href]")
+        console.log(rows)
+        rows.forEach(row =>{
+            row.addEventListener("click", ()=>{
+                window.location.href = row.dataset.href
+            })
+        })
+    })
+</script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,14 @@
+{% extends 'home.html' %}
+{% block content %}
+
+<a href="/">Home</a>
+
+<h2>Submit a Ticket</h2>
+
+<form action="" method="post">
+    {% csrf_token%}
+    {{ form.as_p }}
+    <button type='submit'> Submit</button>
+</form>
+{%endblock%}
+

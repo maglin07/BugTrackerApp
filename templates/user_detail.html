@@ -1,0 +1,29 @@
+{% extends "home.html" %}
+{% block content %}
+<h3>User's Ticket Detail Page</h3>
+
+<p>
+    <a href="/">Home</a>
+</p>
+
+  <h5> Ticket submitted</h5>
+  {% for submit in submitted %}
+    <p>{{submit }}</p>
+  {% endfor %}
+
+  <hr>
+  <h5> Ticket assigned</h5>
+
+  {% for assign in assigned %}
+    <p>{{assign }}</p>
+  {% endfor %}
+
+  <hr>
+  <h5> Ticket completed</h5>
+
+  {% for complete in completed %}
+    <p>{{complete }}</p>
+  {% endfor %}
+
+
+{%endblock%}
